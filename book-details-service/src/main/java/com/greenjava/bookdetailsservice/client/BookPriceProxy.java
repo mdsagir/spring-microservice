@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 
-@FeignClient(name="book-price-service")
+@FeignClient(name="zuul-api-gateway")
 @RibbonClient(name="book-price-service")
 public interface BookPriceProxy {
 
-    @GetMapping("/book/{name}")
+    @GetMapping("/book-price-service/book/{name}")
     Book book(@PathVariable("name") String name);
 
 }
