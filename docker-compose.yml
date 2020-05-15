@@ -1,0 +1,38 @@
+version: "3.7"
+services:
+  naming-server:
+    image: eureka-naming-server:latest
+    ports:
+     - "8761:8761"
+    restart: always
+    networks:
+     - book-details-network
+
+  book-details-service:
+    image: book-details-service:latest
+    ports:
+     - 8080:8080
+    restart: always
+    depends_on:
+     - book-price-service
+     - naming-server
+    networks:
+     - book-details-network  
+    links: 
+     - naming-server 
+  
+  book-price-service:
+    image: book-price-service:latest
+    ports:
+     - "8081:8081"
+    restart: always
+    depends_on:
+     - naming-server
+    networks: 
+     - book-details-network
+    links: 
+     - naming-server 
+
+networks:
+  book-details-network:
+
